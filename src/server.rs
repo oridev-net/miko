@@ -25,9 +25,9 @@ fn handle_connection(mut stream: TcpStream) {
         .collect();
 
     println!("Request: {:#?}", http_request[0]);
-	service::handle_service(&http_request);
+	let proxied_service = service::handle_service(&http_request);
 	
-	let response = "HTTP/1.1 200 OK\r\n\r\n";
+	let response = format!("{proxied_service}");
 
     stream.write_all(response.as_bytes()).unwrap();
 }
