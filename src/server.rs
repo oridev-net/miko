@@ -1,13 +1,14 @@
 use std::{
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
+    env
 };
 
 #[path = "./service.rs"]
 mod service;
 
 pub fn start_server() {
-    let listener = TcpListener::bind("0.0.0.0:7878").unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
@@ -24,10 +25,9 @@ fn handle_connection(mut stream: TcpStream) {
         .take_while(|line| !line.is_empty())
         .collect();
 
-    println!("Request: {:#?}", http_request[0]);
-	let proxied_service = service::handle_service(&http_request);
-	
-	let response = format!("{proxied_service}");
+	let requested_service = service::handle_service(&http_request).unwrap();
+
+	let response = format!("{requested_service}");
 
     stream.write_all(response.as_bytes()).unwrap();
 }
