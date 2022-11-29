@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<title>Miko - Proxy</title>
+</head>
+<body>
+	<img src="" alt="" id="bg">
+	<script>
+		if (window.innerWidth/16 <= window.innerHeight/9) {
+			document.getElementById("bg").style.height = "101vh"
+			document.getElementById("bg").style.width = ""
+		} else {
+			document.getElementById("bg").style.width = "101vw"
+			document.getElementById("bg").style.height = ""
+		}
+		document.getElementById("bg").src = "/resource/bg"+Math.floor(Math.random() * (4 - 1 + 1) + 1)+".jpg"
+
+		window.addEventListener("resize", () => {
+			if (window.innerWidth/16 <= window.innerHeight/9) {
+				document.getElementById("bg").style.height = "101vh"
+				document.getElementById("bg").style.width = ""
+			} else {
+				document.getElementById("bg").style.width = "101vw"
+				document.getElementById("bg").style.height = ""
+			}
+		})
+	</script>
+	<input type="text" id="url">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			font-family: 'Fira Sans';
+		}
+		body {
+			overflow: hidden;
+		}
+		#bg {
+			position: absolute;
+			z-index: -1;
+			filter: brightness(30%);
+			aspect-ratio: 16 / 9;
+			top: 50%;
+			left: 50%;
+    		transform: translate(-50%, -50%);
+		}
+		#url {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+    		transform: translate(-50%, -50%);
+			width: 60vw;
+			height: 4vw;
+			font-size: 2.5vw;
+			background-color: rgba(0,0,0,.7);
+			border: none;
+			color: #FFFFFF;
+			border-radius: 50px;
+			border-color: #FFFFFF;
+			border-width: .2rem;
+			border-style: solid;
+			padding-left: 1vw;
+			padding-right: 1vw;
+		}
+	</style>
+</body>
+</html>
