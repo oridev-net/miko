@@ -5,6 +5,7 @@ use std::{
 };
 
 mod service;
+mod http;
 
 fn main() {
     let listener = TcpListener::bind("0.0.0.0:7878").unwrap();
@@ -18,14 +19,18 @@ fn main() {
 
 fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
-    let http_request: Vec<_> = buf_reader
-        .lines()
-        .map(|result| result.unwrap())
-        .take_while(|line| !line.is_empty())
-        .collect();
-    let request_line = &http_request[0];
+	let http_request: http::Request = http::Request::parse(buf_reader);
+	println!("{:?}", http_request.request_line.path);
+	if http_request.request_line.path != "*" || http_request.request_line.path != "/" {
+		for i in http_request.headers {
+			println!("{}: {}", i.name, i.value);
+		}
+	}
+	// print!("{:#?}", http_request2);
+	
+ //    let request_line = &http_request[0];
 
-	println!("{http_request:#?}");
+	// println!("{http_request:#?}");
  //    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
  //        ("HTTP/1.1 200 OK", "www/index.html")
  //    } else if request_line == "GET /resource/bg1.jpg HTTP/1.1" {
